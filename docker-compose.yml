@@ -1,5 +1,3 @@
-version: '3'
-
 services:
 
   localstack:
@@ -12,10 +10,27 @@ services:
       - DATA_DIR=/tmp/localstack/data
     ports:
       - "4566:4566"
+    networks:
+      - localstack-network
+
   terraform:
     image: hashicorp/terraform:1.3.3
     container_name: "terraform-spring-sqs-integration-example"
     volumes:
       - ./infra/terraform/:/infra
+    working_dir: /infra
     depends_on:
       - localstack
+    networks:
+      - localstack-network
+    entrypoint: >
+      sh -c "
+      terraform init
+      && terraform fmt
+      && terraform validate
+      && terraform plan -out='infra.out'
+      && terraform apply infra.out"
+
+networks:
+  localstack-network:
+    driver: bridge
