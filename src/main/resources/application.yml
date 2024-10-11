@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: 'spring-sqs-integration-example'
+  cloud:
+    aws:
+      region:
+        static: 'sa-east-1'
+      credentials:
+        access-key: 'local'
+        secret-key: 'local'
+      endpoint: 'http://localhost:4566'
+
+queue:
+  url:
+    sqs-example-queue: 'http://sqs.sa-east-1.localhost.localstack.cloud:4566/000000000000/sqs-example-queue'
