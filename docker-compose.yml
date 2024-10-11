@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+
+  localstack:
+    image: localstack/localstack
+    container_name: "localstack-spring-sqs-integration-example"
+    environment:
+      - SERVICES=sqs
+      - DEFAULT_REGION=sa-east-1
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+    ports:
+      - "4566:4566"
+  terraform:
+    image: hashicorp/terraform:1.3.3
+    container_name: "terraform-spring-sqs-integration-example"
+    volumes:
+      - ./infra/terraform/:/infra
+    depends_on:
+      - localstack
