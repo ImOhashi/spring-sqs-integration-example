@@ -17,6 +17,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void sendUserInformation(UserDto userDto) {
-        eventProducer.sendMessage(new User(userDto.id(), userDto.name(), userDto.email()));
+        eventProducer.sendMessage(
+                new User.Builder()
+                        .setId(userDto.id())
+                        .setName(userDto.name())
+                        .setEmail(userDto.email())
+                        .build()
+        );
     }
 }
