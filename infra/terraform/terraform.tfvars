@@ -1,0 +1,1 @@
+sqs_name = "sqs-example-queue"
